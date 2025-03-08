@@ -1,0 +1,32 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f8fc;
+    color: #333;
+}
+
+/* Navigation Bar */
+.navbar {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Content */
+.container {
+    max-width: 900px;
+}
+
+/* Buttons */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Footer */
+footer {
+    margin-top: 50px;
+    padding: 10px 0;
+}

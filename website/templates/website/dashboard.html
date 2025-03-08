@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our Services - Rengigs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h3>Your Subscriptions</h3>
+        <ul>
+            {% for sub in subscriptions %}
+                <li>{{ sub.service.name }} - <a href="{% url 'unsubscribe' sub.service.id %}" class="text-danger">Unsubscribe</a></li>
+            {% empty %}
+                <li>No subscriptions yet.</li>
+            {% endfor %}
+        </ul>
+        
+        </div>
+    </div>
+</body>
+</html>
+
+
+

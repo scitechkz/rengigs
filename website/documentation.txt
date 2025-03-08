@@ -1,0 +1,236 @@
+# Rengigs Django Web App - Complete Setup Guide
+
+## **Step 1: Install Django and Set Up the Project**
+
+1. Install Django:
+   ```bash
+   pip install django
+   ```
+
+2. Create a Django project:
+   ```bash
+   django-admin startproject rengigs
+   ```
+
+3. Navigate to the project folder:
+   ```bash
+   cd rengigs
+   ```
+
+4. Run the server to confirm everything works:
+   ```bash
+   python manage.py runserver
+   ```
+
+---
+
+## **Step 2: Create a Django App**
+
+1. Create a new Django app called `website`:
+   ```bash
+   python manage.py startapp website
+   ```
+
+2. Add `website` to `INSTALLED_APPS` in `settings.py`:
+   ```python
+   INSTALLED_APPS = [
+       'django.contrib.admin',
+       'django.contrib.auth',
+       'django.contrib.contenttypes',
+       'django.contrib.sessions',
+       'django.contrib.messages',
+       'django.contrib.staticfiles',
+       'website',
+   ]
+   ```
+
+---
+
+## **Step 3: Set Up URLs and Views**
+
+1. Create a `urls.py` file inside `website`:
+   ```python
+   from django.urls import path
+   from . import views
+   
+   urlpatterns = [
+       path('', views.home, name='home'),
+   ]
+   ```
+
+2. Modify `views.py` in `website`:
+   ```python
+   from django.shortcuts import render
+   
+   def home(request):
+       return render(request, 'website/home.html')
+   ```
+
+3. Connect the app URLs in `rengigs/urls.py`:
+   ```python
+   from django.contrib import admin
+   from django.urls import path, include
+   
+   urlpatterns = [
+       path('admin/', admin.site.urls),
+       path('', include('website.urls')),
+   ]
+   ```
+
+---
+
+## **Step 4: Create Templates & Static Files**
+
+1. Inside `website`, create the following folders:
+   ```bash
+   mkdir templates
+   mkdir templates/website
+   mkdir static
+   mkdir static/css
+   mkdir static/images
+   ```
+
+2. Update `settings.py` to include these:
+   ```python
+   TEMPLATES = [
+       {
+           'BACKEND': 'django.template.backends.django.DjangoTemplates',
+           'DIRS': [BASE_DIR / 'templates'],
+           'APP_DIRS': True,
+           'OPTIONS': {
+               'context_processors': [
+                   'django.template.context_processors.debug',
+                   'django.template.context_processors.request',
+                   'django.contrib.auth.context_processors.auth',
+                   'django.contrib.messages.context_processors.messages',
+               ],
+           },
+       },
+   ]
+   ```
+
+3. Create `home.html` inside `templates/website`:
+   ```html
+   <!DOCTYPE html>
+   <html>
+   <head>
+       <title>Rengigs - Automate Your Business</title>
+       <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+   </head>
+   <body>
+       <h1>Welcome to Rengigs</h1>
+       <p>AI-powered automation solutions for businesses.</p>
+   </body>
+   </html>
+   ```
+
+4. Create `style.css` inside `static/css/`:
+   ```css
+   body {
+       font-family: Arial, sans-serif;
+       background-color: #f0f0f0;
+       text-align: center;
+   }
+   ```
+
+---
+
+## **Step 5: Create a Signup Model**
+
+1. Modify `models.py` in `website`:
+   ```python
+   from django.db import models
+   
+   class Signup(models.Model):
+       company_name = models.CharField(max_length=255)
+       email = models.EmailField(unique=True)
+       created_at = models.DateTimeField(auto_now_add=True)
+   
+       def __str__(self):
+           return self.company_name
+   ```
+
+2. Run migrations:
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+3. Register the model in `admin.py`:
+   ```python
+   from django.contrib import admin
+   from .models import Signup
+   
+   admin.site.register(Signup)
+   ```
+
+---
+
+## **Step 6: Create Signup Form**
+
+1. Modify `forms.py` in `website`:
+   ```python
+   from django import forms
+   from .models import Signup
+   
+   class SignupForm(forms.ModelForm):
+       class Meta:
+           model = Signup
+           fields = ['company_name', 'email']
+   ```
+
+2. Modify `views.py`:
+   ```python
+   from django.shortcuts import render, redirect
+   from .forms import SignupForm
+   
+   def signup(request):
+       if request.method == 'POST':
+           form = SignupForm(request.POST)
+           if form.is_valid():
+               form.save()
+               return redirect('home')
+       else:
+           form = SignupForm()
+       return render(request, 'website/signup.html', {'form': form})
+   ```
+
+3. Update `urls.py`:
+   ```python
+   urlpatterns = [
+       path('', views.home, name='home'),
+       path('signup/', views.signup, name='signup'),
+   ]
+   ```
+
+4. Create `signup.html`:
+   ```html
+   <h2>Sign Up for Rengigs Services</h2>
+   <form method="post">
+       {% csrf_token %}
+       {{ form.as_p }}
+       <button type="submit">Sign Up</button>
+   </form>
+   ```
+
+---
+
+## **Step 7: Deploy to Render**
+
+1. Push your project to **GitHub**.
+2. Create a **Render.com** account and connect your GitHub repo.
+3. Set environment variables in **Render**:
+   - `DEBUG=False`
+   - `ALLOWED_HOSTS=['yourdomain.com']`
+4. Deploy 🚀
+
+---
+
+## **Final Testing & Optimization**
+
+- ✅ Ensure all pages and forms are working.
+- ✅ Add animations using **AOS**.
+- ✅ Optimize images for faster loading.
+
+🎉 **Congratulations! Your Rengigs Web App is Ready!** 🚀
+

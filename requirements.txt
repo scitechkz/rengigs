@@ -1,0 +1,20 @@
+Django==4.2.6
+gunicorn==21.2.0
+djangorestframework==3.14.0
+django-environ==0.11.2
+django-crispy-forms==2.0
+crispy-bootstrap5==0.7
+whitenoise==6.6.0
+psycopg2-binary==2.9.9  # If using PostgreSQL
+Pillow==10.1.0  # For image handling
+django-storages==1.14.2  # For media file storage
+boto3==1.28.57  # If using AWS S3 for media storage
+celery==5.3.4  # For background tasks
+redis==5.0.1  # Required for Celery
+drf-yasg==1.21.7  # API documentation
+dj-database-url==2.1.0  # Database URL handling
+django-cors-headers==4.3.0  # CORS for frontend integration
+django-extensions==3.2.3  # Extra Django commands
+stripe==7.8.1  # Payment processing with Stripe
+python-dotenv==1.0.1 #to load environmental variable
+

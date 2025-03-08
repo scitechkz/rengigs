@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">👤 User Dashboard</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h3>📜 Active Subscriptions</h3>
+            {% if subscriptions %}
+                <ul class="list-group">
+                    {% for sub in subscriptions %}
+                        <li class="list-group-item">
+                            {{ sub.service.name }} - Expires on {{ sub.expiry_date }}
+                            <a href="{% url 'renew_subscription' sub.id %}" class="btn btn-sm btn-success float-end">Renew</a>
+                            <a href="{% url 'cancel_subscription' sub.id %}" class="btn btn-sm btn-danger float-end me-2">Cancel</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You have no active subscriptions.</p>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <h3>💳 Payment History</h3>
+            {% if payments %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                            <tr>
+                                <td>{{ payment.service.name }}</td>
+                                <td>${{ payment.amount }}</td>
+                                <td>{{ payment.date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No payment history found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
