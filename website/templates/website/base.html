@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- In base.html head section -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Rengigs - Automate Your Business{% endblock %}</title>
@@ -34,9 +36,16 @@
                     {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Welcome, {{ user.username }}</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                        
+                        
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>  
+                    <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>  
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li> 
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li> 
+                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                       
                     {% endif %}
                 </ul>
                 
