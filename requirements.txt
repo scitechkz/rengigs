@@ -16,5 +16,4 @@ dj-database-url==2.1.0  # Database URL handling
 django-cors-headers==4.3.0  # CORS for frontend integration
 django-extensions==3.2.3  # Extra Django commands
 stripe==7.8.1  # Payment processing with Stripe
-python-dotenv==1.0.1 #to load environmental variable
-
+python-dotenv==1.0.1 #to load environmental variabl
