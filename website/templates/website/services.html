@@ -6,15 +6,25 @@
 {% block content %}
 <!-- Hero Section -->
 <div class="hero-section">
+    <!-- Dual-layer overlay for better contrast -->
+    <div class="overlay-gradient"></div>
+    <div class="overlay-color"></div>
+    
     <div class="container py-5">
-        <!-- Add gradient text effect -->
-        <h1 class="display-4 text-gradient fw-bold">Our Automation Solutions</h1>
-        <p class="lead text-gradient-sub">Transform your business operations with cutting-edge automation</p>
+        <div class="text-container">
+            <!-- Updated to black text with neon effects -->
+            <h1 class="display-4 fw-bold neon-shadow" style="color: #000000;">
+                Our Automation Solutions
+            </h1>
+            <p class="lead soft-glow" style="color: #000000;">
+                Transform your business operations with cutting-edge automation
+            </p>
+        </div>
     </div>
 </div>
-
 <!-- Services Grid -->
 <div class="container my-5">
+    
     <div class="row g-4">
         <!-- Service 1 -->
         <div class="col-md-6 col-lg-4">
@@ -67,38 +77,100 @@
 </div>
 {% endblock %}
 
-<!-- Custom CSS -->
+<<div class="hero-section">
+    <!-- Dual-layer overlay for better contrast -->
+    <div class="overlay-gradient"></div>
+    <div class="overlay-color"></div>
+    
+    <div class="container py-5">
+        <div class="text-container">
+            <!-- Changed to black text -->
+            <h1 class="display-4 fw-bold neon-shadow" style="color: black;">
+                Our Automation Solutions
+            </h1>
+            <p class="lead soft-glow" style="color: black;">
+                Transform your business operations with cutting-edge automation
+            </p>
+        </div>
+    </div>
+</div>
+
 <style>
-    .hero-section {
-        background: linear-gradient(135deg, #007bff, #00c6ff);
-        min-height: 300px;
-        display: flex;
-        align-items: center;
-        color: transparent; /* Required for gradient text */
+.hero-section {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+/* Dual overlay system */
+.overlay-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.7)
+    );
+    z-index: 1;
+}
+
+.overlay-color {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 33, 71, 0.4); /* Deep navy overlay */
+    z-index: 2;
+}
+
+.text-container {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Neon text effect */
+.neon-shadow {
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #00f5d4,
+        0 0 20px #00f5d4,
+        0 0 25px #00f5d4,
+        0 0 30px #00f5d4;
+    animation: neon-glow 2s infinite alternate;
+}
+
+/* Soft glow for subtext */
+.soft-glow {
+    text-shadow: 
+        0 2px 4px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes neon-glow {
+    from {
+        text-shadow: 
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #00f5d4;
     }
-    
-    .text-gradient {
-        background: linear-gradient(45deg, #ffec99, #ffd700);
-        -webkit-background-clip: text;
-        background-clip: text;
-        text-fill-color: transparent;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        animation: shine 2s infinite;
+    to {
+        text-shadow: 
+            0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 30px #00f5d4,
+            0 0 40px #00f5d4,
+            0 0 50px #00f5d4,
+            0 0 60px #00f5d4;
     }
-    
-    .text-gradient-sub {
-        background: linear-gradient(45deg, #ffffff, #e0e0e0);
-        -webkit-background-clip: text;
-        background-clip: text;
-        text-fill-color: transparent;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-    
-    @keyframes shine {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+}
 </style>

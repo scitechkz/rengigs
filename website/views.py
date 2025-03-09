@@ -267,7 +267,9 @@ def send_reminders_view(request):
 @login_required
 def user_dashboard(request):
     subscriptions = Subscription.objects.filter(user=request.user)
-    payments = Payment.objects.filter(user=request.user).order_by('-date')
+   # payments = Payment.objects.filter(user=request.user).order_by('-date')
+    payments = Payment.objects.filter(user=request.user).order_by('-paid_at')
+
 
     return render(request, 'dashboard/dashboard.html', {
         'subscriptions': subscriptions,
