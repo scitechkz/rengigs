@@ -69,6 +69,8 @@ class Subscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     subscribed_at = models.DateTimeField(auto_now_add=True)
+    expiry_date = models.DateTimeField(blank=True, null=True)
+
     
     def __str__(self):
         return f"{self.user.username} - {self.service.name}"

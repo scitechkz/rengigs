@@ -14,18 +14,21 @@ from .models import UserProfile
 import stripe
 from .models import Service, Payment, Subscription
 from .tasks import send_expiry_reminders
-from .models import Subscription, Payment
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
+
 
 
 # Create your views here.
 def home(request):
     return render(request, 'website/home.html')
 
-def services(request):
-    return render(request, 'website/services.html')  # Renders the services page
+#def services(request):
+ #   return render(request, 'website/services.html')  # Renders the services page
 
+def services(request):
+    all_services = Service.objects.all()  # Fetch all services
+    return render(request, 'website/services.html', {'services': all_services})
 
 
 def signup_view(request):
@@ -182,8 +185,16 @@ def service_list(request):
 @login_required
 def subscribe(request, service_id):
     service = get_object_or_404(Service, id=service_id)
-    Subscription.objects.get_or_create(user=request.user, service=service)
+    subscription, created = Subscription.objects.get_or_create(user=request.user, service=service)
+
+    if not created:
+        messages.warning(request, "You are already subscribed to this service.")
+    else:
+        messages.success(request, f"You have successfully subscribed to {service.name}.")
+
     return redirect('services')
+
+    
 
 @login_required
 def unsubscribe(request, service_id):
@@ -308,7 +319,8 @@ def admin_dashboard(request):
     total_users = User.objects.count()
     active_subscriptions = Subscription.objects.count()
     total_revenue = Payment.objects.aggregate(Sum('amount'))['amount__sum'] or 0
-    payments = Payment.objects.order_by('-date')[:10]  # Last 10 payments
+    #payments = Payment.objects.order_by('-date')[:10]  # Last 10 payments
+    payments = Payment.objects.order_by('-paid_at')[:10]  # Fix field name
     users = User.objects.all().order_by('-date_joined')[:10]  # Last 10 users
 
     return render(request, 'admin_dashboard.html', {
@@ -318,3 +330,18 @@ def admin_dashboard(request):
         'payments': payments,
         'users': users
     })
+
+#toggle subsciption
+
+@login_required
+def toggle_subscription(request):
+    if request.method == "POST":
+        service_id = request.POST.get("service_id")
+        service = get_object_or_404(Service, id=service_id)
+
+        if request.user.subscriptions.filter(id=service.id).exists():
+            request.user.subscriptions.remove(service)  # Unsubscribe
+        else:
+            request.user.subscriptions.add(service)  # Subscribe
+
+    return redirect('services')

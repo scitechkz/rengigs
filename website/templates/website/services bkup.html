@@ -1,90 +1,176 @@
 {% extends 'website/base.html' %}
+{% load static %}
 
 {% block title %}Our Services - Rengigs{% endblock %}
 
 {% block content %}
-<div class="text-center mt-5">
-    <h1>Our Automation Services</h1>
-    <ul class="list-group">
-        <li class="list-group-item">🤖 AI BOTs for Standard Operating Procedures</li>
-        <li class="list-group-item">🔄 Advanced Workflow Automation</li>
-        <li class="list-group-item">🚀 Business Process Optimization</li>
-        <li class="list-group-item">📊 Machine Learning-Based Decision Systems</li>
-    </ul>
+<!-- Hero Section -->
+<div class="hero-section">
+    <!-- Dual-layer overlay for better contrast -->
+    <div class="overlay-gradient"></div>
+    <div class="overlay-color"></div>
+    
+    <div class="container py-5">
+        <div class="text-container">
+            <!-- Updated to black text with neon effects -->
+            <h1 class="display-4 fw-bold neon-shadow" style="color: #000000;">
+                Our Automation Solutions
+            </h1>
+            <p class="lead soft-glow" style="color: #000000;">
+                Transform your business operations with cutting-edge automation
+            </p>
+        </div>
+    </div>
+</div>
+<!-- Services Grid -->
+<div class="container my-5">
+    
+    <div class="row g-4">
+        <!-- Service 1 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <i class="fas fa-robot fa-3x mb-3 text-primary"></i>
+                    <h3 class="card-title">AI BOTs for SOPs</h3>
+                    <p class="card-text">Custom AI assistants that automate repetitive tasks and enforce standardized procedures across your organization.</p>
+                    <a href="{% url 'contact' %}" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <i class="fas fa-sync-alt fa-3x mb-3 text-success"></i>
+                    <h3 class="card-title">Workflow Automation</h3>
+                    <p class="card-text">Intelligent systems that streamline multi-step processes, reducing human error and accelerating task completion.</p>
+                    <a href="{% url 'contact' %}" class="btn btn-success">Get Started</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <i class="fas fa-rocket fa-3x mb-3 text-warning"></i>
+                    <h3 class="card-title">Process Optimization</h3>
+                    <p class="card-text">Data-driven analysis and AI-powered recommendations to maximize efficiency in your business operations.</p>
+                    <a href="{% url 'contact' %}" class="btn btn-warning text-white">Optimize Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <i class="fas fa-brain fa-3x mb-3 text-info"></i>
+                    <h3 class="card-title">Decision Support Systems</h3>
+                    <p class="card-text">Machine learning models that provide predictive analytics and actionable insights for strategic decisions.</p>
+                    <a href="{% url 'contact' %}" class="btn btn-info">Explore Solutions</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
-{% for service in services %}
-<div class="col-md-4">
-    <div class="card p-3 mb-4">
-        <h4><i class="{{ service.icon }}"></i> {{ service.name }}</h4>
-        <p>{{ service.description }}</p>
-        <p><strong>Price:</strong> ${{ service.price }}</p>
-        {% if service.id in subscribed_services %}
-            <button class="btn btn-secondary" disabled>Subscribed</button>
-        {% else %}
-            <a href="{% url 'checkout' service.id %}" class="btn btn-primary">Pay Now</a>
-        {% endif %}
+<<div class="hero-section">
+    <!-- Dual-layer overlay for better contrast -->
+    <div class="overlay-gradient"></div>
+    <div class="overlay-color"></div>
+    
+    <div class="container py-5">
+        <div class="text-container">
+            <!-- Changed to black text -->
+            <h1 class="display-4 fw-bold neon-shadow" style="color: black;">
+                Our Automation Solutions
+            </h1>
+            <p class="lead soft-glow" style="color: black;">
+                Transform your business operations with cutting-edge automation
+            </p>
+        </div>
     </div>
 </div>
-{% endfor %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Services - Rengigs</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">Rengigs</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'services' %}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Sign Up</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<style>
+.hero-section {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+}
 
-    <!-- Services Section -->
-    <div class="container text-center mt-5">
-        <h1 class="display-5">Our Automation Services</h1>
-        <p class="lead">We help businesses streamline operations and cut costs with AI-driven automation.</p>
+/* Dual overlay system */
+.overlay-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.7)
+    );
+    z-index: 1;
+}
 
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <img src="https://source.unsplash.com/400x300/?technology,ai" class="img-fluid rounded" alt="AI Automation">
-                <h3 class="mt-3">AI BOT Automation</h3>
-                <p>Leverage AI-powered BOTs for standard operating procedures and decision-making tasks.</p>
-            </div>
-            <div class="col-md-4">
-                <img src="https://source.unsplash.com/400x300/?workflow,business" class="img-fluid rounded" alt="Workflow Automation">
-                <h3 class="mt-3">Workflow Automation</h3>
-                <p>Automate repetitive workflows to increase efficiency and reduce manual errors.</p>
-            </div>
-            <div class="col-md-4">
-                <img src="https://source.unsplash.com/400x300/?analytics,data" class="img-fluid rounded" alt="Business Analytics">
-                <h3 class="mt-3">Business Process Optimization</h3>
-                <p>Use data analytics and AI to optimize business operations and boost productivity.</p>
-            </div>
-        </div>
-    </div>
+.overlay-color {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 33, 71, 0.4); /* Deep navy overlay */
+    z-index: 2;
+}
 
-    <!-- Footer -->
-    <footer class="text-center p-3 mt-5 bg-dark text-white">
-        &copy; 2025 Rengigs - All Rights Reserved
-    </footer>
+.text-container {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+/* Neon text effect */
+.neon-shadow {
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #00f5d4,
+        0 0 20px #00f5d4,
+        0 0 25px #00f5d4,
+        0 0 30px #00f5d4;
+    animation: neon-glow 2s infinite alternate;
+}
+
+/* Soft glow for subtext */
+.soft-glow {
+    text-shadow: 
+        0 2px 4px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes neon-glow {
+    from {
+        text-shadow: 
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #00f5d4;
+    }
+    to {
+        text-shadow: 
+            0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 30px #00f5d4,
+            0 0 40px #00f5d4,
+            0 0 50px #00f5d4,
+            0 0 60px #00f5d4;
+    }
+}
+</style>

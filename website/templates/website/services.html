@@ -6,171 +6,60 @@
 {% block content %}
 <!-- Hero Section -->
 <div class="hero-section">
-    <!-- Dual-layer overlay for better contrast -->
     <div class="overlay-gradient"></div>
     <div class="overlay-color"></div>
-    
-    <div class="container py-5">
-        <div class="text-container">
-            <!-- Updated to black text with neon effects -->
-            <h1 class="display-4 fw-bold neon-shadow" style="color: #000000;">
-                Our Automation Solutions
-            </h1>
-            <p class="lead soft-glow" style="color: #000000;">
-                Transform your business operations with cutting-edge automation
-            </p>
-        </div>
+
+    <div class="container py-5 text-center">
+        <h1 class="display-4 fw-bold neon-shadow" style="color: #000;">
+            Our Automation Solutions
+        </h1>
+        <p class="lead soft-glow" style="color: #000;">
+            Transform your business operations with cutting-edge automation
+        </p>
     </div>
 </div>
+
 <!-- Services Grid -->
 <div class="container my-5">
-    
     <div class="row g-4">
-        <!-- Service 1 -->
+        {% for service in services %}
         <div class="col-md-6 col-lg-4">
-            <div class="card service-card h-100">
-                <div class="card-body">
-                    <i class="fas fa-robot fa-3x mb-3 text-primary"></i>
-                    <h3 class="card-title">AI BOTs for SOPs</h3>
-                    <p class="card-text">Custom AI assistants that automate repetitive tasks and enforce standardized procedures across your organization.</p>
-                    <a href="{% url 'contact' %}" class="btn btn-primary">Learn More</a>
-                </div>
-            </div>
-        </div>
+            <div class="card service-card h-100 shadow-sm border-0">
+                <div class="card-body text-center">
+                    <!-- Display FontAwesome icon if available, else use default -->
+                    <i class="{{ service.icon|default:'fas fa-cogs' }} fa-3x mb-3 text-primary"></i>
 
-        <!-- Service 2 -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card service-card h-100">
-                <div class="card-body">
-                    <i class="fas fa-sync-alt fa-3x mb-3 text-success"></i>
-                    <h3 class="card-title">Workflow Automation</h3>
-                    <p class="card-text">Intelligent systems that streamline multi-step processes, reducing human error and accelerating task completion.</p>
-                    <a href="{% url 'contact' %}" class="btn btn-success">Get Started</a>
-                </div>
-            </div>
-        </div>
+                    <h3 class="card-title">{{ service.name }}</h3>
+                    <p class="card-text">{{ service.description }}</p>
+                    <p class="fw-bold text-success">${{ service.price }}</p>
 
-        <!-- Service 3 -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card service-card h-100">
-                <div class="card-body">
-                    <i class="fas fa-rocket fa-3x mb-3 text-warning"></i>
-                    <h3 class="card-title">Process Optimization</h3>
-                    <p class="card-text">Data-driven analysis and AI-powered recommendations to maximize efficiency in your business operations.</p>
-                    <a href="{% url 'contact' %}" class="btn btn-warning text-white">Optimize Now</a>
-                </div>
-            </div>
-        </div>
+                    <!-- Subscription Logic -->
+                    {% if user.is_authenticated %}
+                        {% if service in user.subscriptions.all %}
+                        <form method="post" action="{% url 'toggle_subscription' %}">
 
-        <!-- Service 4 -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card service-card h-100">
-                <div class="card-body">
-                    <i class="fas fa-brain fa-3x mb-3 text-info"></i>
-                    <h3 class="card-title">Decision Support Systems</h3>
-                    <p class="card-text">Machine learning models that provide predictive analytics and actionable insights for strategic decisions.</p>
-                    <a href="{% url 'contact' %}" class="btn btn-info">Explore Solutions</a>
+                                {% csrf_token %}
+                                <input type="hidden" name="service_id" value="{{ service.id }}">
+                                <button type="submit" class="btn btn-danger">Unsubscribe</button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{% url 'toggle_subscription' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="service_id" value="{{ service.id }}">
+                                <button type="submit" class="btn btn-primary">Subscribe</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-secondary">Subscribe</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">No services available at the moment.</p>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
-
-<<div class="hero-section">
-    <!-- Dual-layer overlay for better contrast -->
-    <div class="overlay-gradient"></div>
-    <div class="overlay-color"></div>
-    
-    <div class="container py-5">
-        <div class="text-container">
-            <!-- Changed to black text -->
-            <h1 class="display-4 fw-bold neon-shadow" style="color: black;">
-                Our Automation Solutions
-            </h1>
-            <p class="lead soft-glow" style="color: black;">
-                Transform your business operations with cutting-edge automation
-            </p>
-        </div>
-    </div>
-</div>
-
-<style>
-.hero-section {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-}
-
-/* Dual overlay system */
-.overlay-gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        rgba(0, 0, 0, 0.3),
-        rgba(0, 0, 0, 0.7)
-    );
-    z-index: 1;
-}
-
-.overlay-color {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 33, 71, 0.4); /* Deep navy overlay */
-    z-index: 2;
-}
-
-.text-container {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* Neon text effect */
-.neon-shadow {
-    text-shadow: 
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 15px #00f5d4,
-        0 0 20px #00f5d4,
-        0 0 25px #00f5d4,
-        0 0 30px #00f5d4;
-    animation: neon-glow 2s infinite alternate;
-}
-
-/* Soft glow for subtext */
-.soft-glow {
-    text-shadow: 
-        0 2px 4px rgba(255, 255, 255, 0.4),
-        0 0 10px rgba(255, 255, 255, 0.2);
-}
-
-@keyframes neon-glow {
-    from {
-        text-shadow: 
-            0 0 5px #fff,
-            0 0 10px #fff,
-            0 0 15px #00f5d4;
-    }
-    to {
-        text-shadow: 
-            0 0 10px #fff,
-            0 0 20px #fff,
-            0 0 30px #00f5d4,
-            0 0 40px #00f5d4,
-            0 0 50px #00f5d4,
-            0 0 60px #00f5d4;
-    }
-}
-</style>

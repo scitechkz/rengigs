@@ -1,10 +1,12 @@
 from django.urls import path
 from django.shortcuts import render, redirect
+from .views import services, toggle_subscription
 from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('services/', views.services, name='services'),  # Services page
+    path("toggle-subscription/", toggle_subscription, name="toggle_subscription"),  
     #path('signup/', views.signup, name='signup'),  # Signup page
     #path('success/', views.success, name='success'),  # Success page
     #path('contact/', views.contact, name='contact'),  # Contact page
