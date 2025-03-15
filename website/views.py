@@ -16,7 +16,8 @@ from .models import Service, Payment, Subscription
 from .tasks import send_expiry_reminders
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
-
+#from .models import UserQuery, AIResponse, SOPDocument
+import random
 
 
 # Create your views here.
@@ -345,3 +346,47 @@ def toggle_subscription(request):
             request.user.subscriptions.add(service)  # Subscribe
 
     return redirect('services')
+
+#allows users to go to the landing page of their subscription
+def lunch_subscription(request, sub_id):
+    subscription = get_object_or_404(Subscription, id=sub_id)
+
+    # Redirect to the landing page of the subscribed service
+    if subscription.service.landing_page_url:
+        return redirect(subscription.service.landing_page_url)
+    
+    # If no landing page is set, redirect to a default page
+    return redirect('dashboard')  # Change 'dashboard' to your default fallback page
+
+from django.contrib.auth.decorators import login_required
+from .models import SOPDocument
+
+@login_required
+def bots_service(request):
+    """Render the BOTs service landing page with available SOPs."""
+    sop_documents = SOPDocument.objects.all()  # Fetch all SOPs
+    return render(request, "website/bots_service.html", {"sop_documents": sop_documents})
+
+
+@login_required
+def ask_bot(request):
+    """Process user questions and generate AI responses based on SOPs."""
+    if request.method == "POST":
+        question = request.POST.get("question")
+
+        if not question:
+            return render(request, "website/bots_service.html", {"error": "Please enter a question."})
+
+        # Save user query
+        user_query = UserQuery.objects.create(user=request.user, question=question)
+
+        # Fetch SOP content to use as context for AI response
+        sop_texts = " ".join([sop.title for sop in SOPDocument.objects.all()])  # Mocking SOP knowledge
+        response_text = generate_ai_response(question, sop_texts)
+
+        # Save AI response
+        AIResponse.objects.create(query=user_query, text_response=response_text)
+
+        return render(request, "website/bots_service.html", {"response": response_text, "question": question})
+
+    return redirect("bots_service")  # Redirect back if GET request

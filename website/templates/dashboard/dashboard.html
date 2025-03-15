@@ -11,8 +11,12 @@
                     {% for sub in subscriptions %}
                         <li class="list-group-item">
                             {{ sub.service.name }} - Expires on {{ sub.expiry_date }}
+                            <!-- Renew Button -->
                             <a href="{% url 'renew_subscription' sub.id %}" class="btn btn-sm btn-success float-end">Renew</a>
+                            <!-- Cancel Button -->
                             <a href="{% url 'cancel_subscription' sub.id %}" class="btn btn-sm btn-danger float-end me-2">Cancel</a>
+                            <!-- Lunch Button -->
+                            <a href="{% url 'lunch_subscription' sub.id %}" class="btn btn-sm btn-warning float-end me-2">Launch</a>
                         </li>
                     {% endfor %}
                 </ul>

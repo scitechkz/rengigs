@@ -1,6 +1,8 @@
 from django.urls import path
 from django.shortcuts import render, redirect
 from .views import services, toggle_subscription
+from .views import lunch_subscription
+from .views import bots_service, ask_bot
 from . import views
 
 urlpatterns = [
@@ -39,6 +41,10 @@ urlpatterns = [
     path('subscription/cancel/<int:sub_id>/', views.cancel_subscription, name='cancel_subscription'),
     #path for admin dashboard
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('launch/<int:sub_id>/', lunch_subscription, name='lunch_subscription'),
+    path('bots/', views.bots_service, name='bots_service'),
+    path("ask-bot/", ask_bot, name="ask_bot"),  # Ensure this
+
 
 
 

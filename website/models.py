@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
 
@@ -58,6 +60,7 @@ class Service(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     icon = models.CharField(max_length=255, blank=True, null=True)  # FontAwesome Icons
+    landing_page_url = models.URLField(blank=True, null=True) 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -91,7 +94,15 @@ class Payment(models.Model):
 
 #the user model
 
-from django.contrib.auth.models import AbstractUser
 
 
+# Model for storing Standard Operating Procedures (SOPs)
+class SOPDocument(models.Model):
+    title = models.CharField(max_length=255)
+    document = models.FileField(upload_to='sop_documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 

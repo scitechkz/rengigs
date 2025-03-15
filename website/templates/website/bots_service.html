@@ -1,0 +1,42 @@
+{% extends "website/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">🤖 AI BOTs - SOP Guidance</h2>
+    
+    <!-- SOP Document List -->
+    <div class="mt-4">
+        <h4>📂 Available SOP Documents</h4>
+        <ul class="list-group">
+            {% for sop in sop_documents %}
+                <li class="list-group-item">
+                    {{ sop.title }}
+                    <a href="{{ sop.document.url }}" class="btn btn-sm btn-primary float-end" download>Download</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No SOPs available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- AI Chatbot Section -->
+    <div class="mt-5">
+        <h4>💬 Ask the AI BOT</h4>
+        <form action="{% url 'ask_bot' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="question" class="form-control mb-3" placeholder="Type your question here...">
+            <button type="submit" class="btn btn-success">Ask</button>
+        </form>
+    </div>
+
+    <!-- Image Generation Section -->
+    <div class="mt-5">
+        <h4>🎨 Generate Images from SOPs</h4>
+        <form action="{% url 'generate_image' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="image_prompt" class="form-control mb-3" placeholder="Describe the image you need...">
+            <button type="submit" class="btn btn-warning">Generate Image</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
